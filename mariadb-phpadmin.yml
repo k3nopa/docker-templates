@@ -1,0 +1,32 @@
+version : '3'
+
+services:
+  mysql:
+    image: mariadb:latest
+    container_name: dev_mysql
+    ports:
+      - 3306:3306
+    networks:
+      - db-net
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: default_schema
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: dev_pma
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    networks:
+      - db-net
+    ports:
+      - 8080:80
+
+networks:
+  db-net:
+    external: true

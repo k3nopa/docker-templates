@@ -1,0 +1,31 @@
+version : '3'
+
+services:
+  postgres:
+    image: postgres 
+    container_name: dev_pg
+    ports:
+      - 3306:3306
+    networks:
+      - db-net
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: default_schema
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: dev_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: afiqnaufal98@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    restart: always
+    networks:
+      - db-net
+    ports:
+      - 8080:80
+
+networks:
+  db-net:
+    external: true
